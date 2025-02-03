@@ -2,6 +2,10 @@ using UUGS2025.Business.Extensions;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
+var environmentName = builder.Environment.EnvironmentName;
+builder.Configuration.AddJsonFile($"appsettings.{environmentName}.json", optional: true, reloadOnChange: true);
+builder.Configuration.GetConnectionString("umbracoDbDSN");
+
 builder.CreateUmbracoBuilder()
     .AddBackOffice()
     .AddWebsite()

@@ -23,7 +23,16 @@
       "applicationUrl": "https://localhost:44332;http://localhost:30469",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }      
+      }
+    },
+    "carl-desktop": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "carl-desktop"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "https://localhost:44332;http://localhost:30469"
     }
   }
 }

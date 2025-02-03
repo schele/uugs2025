@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -9,6 +9,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Authentication.MicrosoftAccount" Version="8.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="8.0.10" />
     <PackageReference Include="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="7.5.1" />
+    <PackageReference Include="SlowCheetah" Version="2.5.48" />
     <PackageReference Include="Umbraco.Cms" Version="14.3.2" />
   </ItemGroup>
 
@@ -16,6 +17,12 @@
     <!-- Opt-in to app-local ICU to ensure consistent globalization APIs across different platforms -->
     <PackageReference Include="Microsoft.ICU.ICU4C.Runtime" Version="72.1.0.3" />
     <RuntimeHostConfigurationOption Include="System.Globalization.AppLocalIcu" Value="72.1.0.3" Condition="$(RuntimeIdentifier.StartsWith('linux')) or $(RuntimeIdentifier.StartsWith('win')) or ('$(RuntimeIdentifier)' == '' and !$([MSBuild]::IsOSPlatform('osx')))" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="appsettings - Copy.Development.json">
+      <DependentUpon>appsettings.json</DependentUpon>
+    </Content>
   </ItemGroup>
 
   <PropertyGroup>
@@ -28,5 +35,30 @@
     <RazorCompileOnBuild>false</RazorCompileOnBuild>
     <RazorCompileOnPublish>false</RazorCompileOnPublish>
   </PropertyGroup>
+	
+	<ItemGroup>
+		<ScFilesToTransform Include="appsettings.json">
+			<TransformOnBuild>true</TransformOnBuild>
+			<TransformFile>appsettings.%(Configuration).json</TransformFile>
+			<!-- Specify the transform file -->
+			<Link>appsettings.json</Link>
+			<!-- Ensure Link is defined -->
+			<DestinationFile>appsettings.json</DestinationFile>
+			<!-- Specify the destination file -->
+		</ScFilesToTransform>
+		<ScFilesToTransform Include="appsettings..json">
+			<TransformOnBuild>true</TransformOnBuild>
+			<TransformFile>appsettings.%(Configuration).json</TransformFile>
+			<!-- Specify the transform file -->
+			<Link>appsettings..json</Link>
+			<!-- Ensure Link is defined -->
+			<DestinationFile>appsettings.*.json</DestinationFile>
+			<!-- Specify the destination file -->
+		</ScFilesToTransform>
+	</ItemGroup>
+	
+	<Target Name="TransformConfig" AfterTargets="Build">
+		<SlowCheetah.TransformTask Source="@(ScFilesToTransform)" Transform="%(ScFilesToTransform.Identity).config" Destination="%(ScFilesToTransform.Identity)" Condition="Exists('%(ScFilesToTransform.Identity).config')" />
+	</Target>
 
 </Project>
