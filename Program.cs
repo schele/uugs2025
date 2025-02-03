@@ -1,3 +1,5 @@
+using UUGS2025.Business.Extensions;
+
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.CreateUmbracoBuilder()
