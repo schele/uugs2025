@@ -1,8 +1,14 @@
-﻿@using UUGS2025.Models.ViewModels
+﻿@using System.Globalization
+@using UUGS2025.Models.ViewModels
+@using Umbraco.Cms.Web.Common
 @using Umbraco.Cms.Web.Common.PublishedModels
+
+@inject UmbracoHelper _umbracoHelper
 
 @inherits UmbracoViewPage<ErrorPageViewModel>
 
 @{
 	Layout = "root.cshtml";
 }
+
+<h1>404 - @_umbracoHelper.GetDictionaryValue("PageNotFound", Model.CurrentPage.CurrentCultureInfo())</h1>

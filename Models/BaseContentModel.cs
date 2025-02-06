@@ -1,4 +1,5 @@
-﻿using Umbraco.Cms.Core.Models.PublishedContent;
+﻿using System.Globalization;
+using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.Web;
 using uugs2025.Models.PublishedModels;
 
@@ -12,6 +13,14 @@ namespace UUGS2025.Models
         {
             _umbracoContextAccessor = StaticServiceProvider.Instance.GetService<IUmbracoContextAccessor>();
         }
+
+        public CultureInfo CurrentCultureInfo()
+        {
+            var cultureName = CultureInfo.CurrentCulture.Name;
+			var cultureInfo = new CultureInfo(cultureName);
+
+			return cultureInfo;
+		}
 
         public Start StartPage
         {
