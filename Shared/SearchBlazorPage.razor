@@ -16,11 +16,11 @@
     // [Parameter]
     // public string CultureName { get; set; }
 
-    private string inputQuery = "";
+    private string inputQuery = string.Empty;
     private string cultureName = CultureInfo.CurrentCulture.Name;
     private SearchModel searchModel = new SearchModel();
     private bool isSearching = false;
-    private CultureInfo cultureInfo { get; set; }
+    private CultureInfo? cultureInfo { get; set; }
     private List<Hit> pages = new List<Hit>();
 
     protected override async Task OnInitializedAsync()
