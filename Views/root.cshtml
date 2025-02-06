@@ -1,4 +1,5 @@
 ﻿@using System.Globalization
+@using UUGS2025.Business.Interfaces
 @using Umbraco.Cms.Web.Common.PublishedModels
 
 @inherits UmbracoViewPage<IBaseContentModel>
@@ -20,6 +21,7 @@
 </head>
 <body>
     <main>
+        <h1>@Model.CurrentPage.Name</h1>
         <div>@RenderBody()</div>
     </main>
 </body>

@@ -15,12 +15,13 @@ using Umbraco.Cms.Core.PublishedCache;
 using Umbraco.Cms.Infrastructure.ModelsBuilder;
 using Umbraco.Cms.Core;
 using Umbraco.Extensions;
+using UUGS2025.Models;
 
 namespace uugs2025.Models.PublishedModels
 {
 	/// <summary>Start</summary>
 	[PublishedModel("start")]
-	public partial class Start : PublishedContentModel, IBase
+	public partial class Start : BaseContentModel, IBase
 	{
 		// helpers
 #pragma warning disable 0109 // new is redundant

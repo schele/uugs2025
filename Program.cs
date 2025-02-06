@@ -1,3 +1,5 @@
+using Umbraco.Cms.Infrastructure.ModelsBuilder.Building;
+using UUGS2025.Business;
 using UUGS2025.Business.Extensions;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -12,6 +14,8 @@ builder.CreateUmbracoBuilder()
     .AddComposers()
     .ConfigureAuthenticationUsers()
     .Build();
+
+builder.Services.AddSingleton<IModelsGenerator, CustomModelsGenerator>();
 
 WebApplication app = builder.Build();
 
