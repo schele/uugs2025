@@ -1,0 +1,26 @@
+﻿@using System.Globalization
+@using Umbraco.Cms.Web.Common.PublishedModels
+
+@inherits UmbracoViewPage<IBaseContentModel>
+
+@{
+	Layout = null;
+
+    var canonicalUrl = Model.CurrentPage.Url(mode: UrlMode.Absolute, culture: CultureInfo.CurrentUICulture.Name);
+}
+
+<!DOCTYPE html>
+<html lang="@CultureInfo.CurrentUICulture.Name">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <link rel="canonical" href="@canonicalUrl">
+</head>
+<body>
+    <main>
+        <div>@RenderBody()</div>
+    </main>
+</body>
+</html>
