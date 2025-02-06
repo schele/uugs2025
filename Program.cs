@@ -1,6 +1,8 @@
 using Umbraco.Cms.Infrastructure.ModelsBuilder.Building;
 using UUGS2025.Business;
 using UUGS2025.Business.Extensions;
+using UUGS2025.Business.Services;
+using UUGS2025.Business.Services.Interfaces;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -15,9 +17,14 @@ builder.CreateUmbracoBuilder()
     .ConfigureAuthenticationUsers()
     .Build();
 
+builder.Services.AddServerSideBlazor();
+
 builder.Services.AddSingleton<IModelsGenerator, CustomModelsGenerator>();
+builder.Services.AddSingleton<ISearchService, SearchService>();
 
 WebApplication app = builder.Build();
+
+app.MapBlazorHub();
 
 await app.BootUmbracoAsync();
 

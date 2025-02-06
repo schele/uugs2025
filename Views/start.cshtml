@@ -1,8 +1,15 @@
 ﻿@using UUGS2025.Models.ViewModels
 @using Umbraco.Cms.Web.Common.PublishedModels
+@using UUGS2025.Shared
 
 @inherits UmbracoViewPage<StartPageViewModel>
 
 @{
 	Layout = "root.cshtml";
+
+	//var cultureName = System.Globalization.CultureInfo.CurrentCulture.Name;
 }
+
+<component type="typeof(SearchBlazorPage)" render-mode="Server" />
+
+@* <component type="typeof(SearchBlazorPage)" render-mode="Server" param-CultureName="@cultureName" /> *@

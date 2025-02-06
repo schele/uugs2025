@@ -57,6 +57,10 @@
 		</ScFilesToTransform>
 	</ItemGroup>
 	
+	<ItemGroup>
+	  <Folder Include="wwwroot\media\" />
+	</ItemGroup>
+	
 	<Target Name="TransformConfig" AfterTargets="Build">
 		<SlowCheetah.TransformTask Source="@(ScFilesToTransform)" Transform="%(ScFilesToTransform.Identity).config" Destination="%(ScFilesToTransform.Identity)" Condition="Exists('%(ScFilesToTransform.Identity).config')" />
 	</Target>
