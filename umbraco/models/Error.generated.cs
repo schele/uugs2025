@@ -15,6 +15,7 @@ using Umbraco.Cms.Core.PublishedCache;
 using Umbraco.Cms.Infrastructure.ModelsBuilder;
 using Umbraco.Cms.Core;
 using Umbraco.Extensions;
+using Umbraco.Cms.Core.Web;
 using UUGS2025.Models;
 
 namespace uugs2025.Models.PublishedModels
@@ -22,7 +23,7 @@ namespace uugs2025.Models.PublishedModels
 	/// <summary>Error</summary>
 	[PublishedModel("error")]
 	public partial class Error : BaseContentModel
-    {
+	{
 		// helpers
 #pragma warning disable 0109 // new is redundant
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "14.3.2+abc312c")]

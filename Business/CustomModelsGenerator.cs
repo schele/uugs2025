@@ -51,7 +51,7 @@ namespace UUGS2025.Business
                 {
                     result = result
                         .Replace(": PublishedContentModel", ": BaseContentModel")
-                        .Replace("using Umbraco.Extensions;", "using Umbraco.Extensions;" + Environment.NewLine + "using Umbraco.Cms.Core.Web;");
+                        .Replace("using Umbraco.Extensions;", "using Umbraco.Extensions;" + Environment.NewLine + "using Umbraco.Cms.Core.Web;" + Environment.NewLine + "using UUGS2025.Models;");
                 }
 
                 var filename = Path.Combine(modelsDirectory, typeModel.ClrName + ".generated.cs");
