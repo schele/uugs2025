@@ -6,9 +6,10 @@
 @using UUGS2025.Models
 @using Umbraco.Cms.Web.Common
 
-@inject IJSRuntime JSRuntime
+@inject IJSRuntime _jsRuntime
 @inject UmbracoHelper _umbracoHelper
 @inject ISearchService _searchService
+@inject ILogger<SearchBlazorPage> _logger
 
 @code
 {
@@ -32,24 +33,18 @@
         {
             isSearching = true;
             StateHasChanged();
-            
-            await JSRuntime.InvokeVoidAsync("toggleButtonState", "submitButton", true);
-            await JSRuntime.InvokeVoidAsync("disableInputField", "searchInput", true);
 
             await Task.Delay(1500);
             pages = _searchService.SearchContent(searchModel.Query, cultureInfo);
         }
         catch (Exception e)
-        {
-
+        {            
+            _logger.LogError(e.Message);
         }
         finally        
         {
             isSearching = false;
             StateHasChanged();
-
-            await JSRuntime.InvokeVoidAsync("toggleButtonState", "submitButton", false);
-            await JSRuntime.InvokeVoidAsync("disableInputField", "searchInput", false);
         }
     }
 }
@@ -65,9 +60,9 @@
                     <InputText id="searchInput" class="form-control search-input" name="query" type="search" placeholder="@_umbracoHelper.GetDictionaryValue("SearchForContent", cultureInfo)" aria-label="Search" @bind-Value="@searchModel.Query" disabled="@isSearching" />
                     <button type="submit" class="input-group-text search-button" id="submitButton" disabled="@isSearching">
                         <span class="button-text">
-                            <i class="fas fa-search"></i>
+                            <i class="@(isSearching ? "" : "fas fa-search")"></i>
                         </span>
-                        <span class="spinner-border spinner-border-sm" role="status"aria-hidden="true" style="display:none;"></span>
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="@(isSearching ? "display:inline-block;" : "display:none;")"></span>
                     </button>
                 </div>
             </EditForm>
@@ -92,5 +87,3 @@
         </div>
     }
 </div>
-
-<script src="/js/query.js"></script>
