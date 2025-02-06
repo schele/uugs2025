@@ -33,6 +33,15 @@
       },
       "dotnetRunMessages": true,
       "applicationUrl": "https://localhost:44332;http://localhost:30469"
+    },
+    "carl-laptop": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "carl-laptop"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "https://localhost:44332;http://localhost:30469"
     }
   }
 }
