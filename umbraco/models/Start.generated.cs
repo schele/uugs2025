@@ -22,7 +22,7 @@ namespace uugs2025.Models.PublishedModels
 {
 	/// <summary>Start</summary>
 	[PublishedModel("start")]
-	public partial class Start : BaseContentModel, IBase
+	public partial class Start : BaseContentModel
 	{
 		// helpers
 #pragma warning disable 0109 // new is redundant
