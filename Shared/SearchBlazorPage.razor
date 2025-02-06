@@ -16,7 +16,8 @@
     // [Parameter]
     // public string CultureName { get; set; }
 
-    public string cultureName = CultureInfo.CurrentCulture.Name;
+    private string inputQuery = "";
+    private string cultureName = CultureInfo.CurrentCulture.Name;
     private SearchModel searchModel = new SearchModel();
     private bool isSearching = false;
     private CultureInfo cultureInfo { get; set; }
@@ -32,9 +33,11 @@
         try    
         {
             isSearching = true;
-            StateHasChanged();
+            searchModel.Query = inputQuery;
 
-            await Task.Delay(1500);
+            pages.Clear();
+            
+            await Task.Delay(3000);
             pages = _searchService.SearchContent(searchModel.Query, cultureInfo);
         }
         catch (Exception e)
@@ -44,8 +47,9 @@
         finally        
         {
             isSearching = false;
-            StateHasChanged();
         }
+        
+        StateHasChanged();
     }
 }
 
@@ -57,7 +61,7 @@
 
             <EditForm Model="@searchModel" OnValidSubmit="SearchContentAsync">
                 <div class="input-group search-box">
-                    <InputText id="searchInput" class="form-control search-input" name="query" type="search" placeholder="@_umbracoHelper.GetDictionaryValue("SearchForContent", cultureInfo)" aria-label="Search" @bind-Value="@searchModel.Query" disabled="@isSearching" />
+                    <InputText id="searchInput" class="form-control search-input" name="query" type="search" placeholder="@_umbracoHelper.GetDictionaryValue("SearchForContent", cultureInfo)" aria-label="Search" @bind-Value="@inputQuery" disabled="@isSearching" />
                     <button type="submit" class="input-group-text search-button" id="submitButton" disabled="@isSearching">
                         <span class="button-text">
                             <i class="@(isSearching ? "" : "fas fa-search")"></i>
@@ -72,8 +76,9 @@
     <!-- Search Results -->
     @if (pages != null && pages.Any())
     {
-        <div class="search-results mt-4" id="searchResults">        
+        <div class="search-results mt-4" id="searchResults">
             <h3>@_umbracoHelper.GetDictionaryValue("SearchResultFor", cultureInfo) "@searchModel.Query":</h3>
+
             <ul>
                 @foreach (var item in pages)
                 {
