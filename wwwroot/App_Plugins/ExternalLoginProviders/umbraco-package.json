@@ -7,9 +7,9 @@
       "type": "authProvider",
       "alias": "My.AuthProvider.Generic",
       "name": "My Auth Provider",
-      "forProviderName": "Umbraco.Generic",
+      "forProviderName": "Umbraco.ActiveDirectoryB2C",
       "meta": {
-        "label": "Generic",
+        "label": "EntraID",
         "defaultView": {
           "icon": "icon-cloud"
         },

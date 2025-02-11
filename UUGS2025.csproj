@@ -4,11 +4,18 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Business\Extensions\AuthenticationExtensions.cs" />
+    <Compile Remove="Business\Extensions\MemberAuthenticationExtensions.cs" />
+    <Compile Remove="Business\Options\EntraIDB2CMembersExternalLoginProviderOptions.cs" />
+    <Compile Remove="Business\Options\EntraIDB2CUsersExternalLoginProviderOptions.cs" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.MicrosoftAccount" Version="8.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="8.0.12" />
     <PackageReference Include="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="7.5.1" />
+    <PackageReference Include="Microsoft.Owin.Security.Cookies" Version="4.2.2" />
     <PackageReference Include="SlowCheetah" Version="2.5.48" />
     <PackageReference Include="Umbraco.Cms" Version="14.3.2" />
   </ItemGroup>
@@ -58,6 +65,7 @@
 	</ItemGroup>
 	
 	<ItemGroup>
+	  <Folder Include="Business\Extensions\" />
 	  <Folder Include="wwwroot\App_Plugins\ExternalLoginProviders\" />
 	  <Folder Include="wwwroot\media\" />
 	</ItemGroup>

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Umbraco.Cms.Api.Management.Security;
+using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Security;
 using Umbraco.Cms.Core.Web;
 
@@ -18,10 +19,10 @@ namespace UUGS2025.Business.Options
 
         public void Configure(string? name, BackOfficeExternalLoginProviderOptions options)
         {
-            //if (name != Constants.Security.BackOfficeExternalAuthenticationTypePrefix + SchemeName)
-            //{
-            //    return;
-            //}
+            if (name != Constants.Security.BackOfficeExternalAuthenticationTypePrefix + SchemeName)
+            {
+                return;
+            }
 
             Configure(options);
         }
