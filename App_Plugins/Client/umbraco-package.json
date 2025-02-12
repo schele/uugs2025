@@ -1,0 +1,67 @@
+{
+  "$schema": "../../umbraco-package-schema.json",
+  "name": "My.CustomEditors",
+  "version": "0.1.0",
+  "extensions": [
+    {
+      "type": "propertyEditorUi",
+      "alias": "My.PropertyEditorUi.KeyValueList",
+      "name": "Key Value List",
+      "element": "/App_Plugins/Client/keyvaluelist.js",
+      "elementName": "key-value-list-editor",
+      "meta": {
+        "label": "Key Value List",
+        "icon": "icon-list",
+        "group": "common",
+        "propertyEditorSchemaAlias": "Umbraco.Plain.Json"
+      }
+    },
+    {
+      "type": "propertyEditorUi",
+      "alias": "My.PropertyEditorUi.KeyValueTags",
+      "name": "Key Value Tags",
+      "element": "/App_Plugins/Client/keyvaluetags.js",
+      "elementName": "key-value-tags-editor",
+      "meta": {
+        "label": "Key Value Tags",
+        "icon": "icon-tags",
+        "group": "common",
+        "propertyEditorSchemaAlias": "My.PropertyEditorUi.KeyValueTags",
+        "settings": {
+          "properties": [
+            {
+              "alias": "group",
+              "label": "Group",
+              "description": "Define a tag group",
+              "propertyEditorUiAlias": "Umb.PropertyEditorUi.TextBox"
+            },
+            {
+              "alias": "storageType",
+              "label": "Storage type",
+              "description": "The tag values can be stored as text or JSON",
+              "propertyEditorUiAlias": "Umb.PropertyEditorUi.RadioButtonList",
+              "config": {
+                "items": [
+                  {
+                    "value": "text",
+                    "label": "Text"
+                  },
+                  {
+                    "value": "json",
+                    "label": "JSON"
+                  }
+                ]
+              }
+            }
+          ],
+          "defaultData": [
+            {
+              "alias": "storageType",
+              "value": "text"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

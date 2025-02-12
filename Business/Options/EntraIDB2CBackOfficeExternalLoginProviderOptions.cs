@@ -29,56 +29,11 @@ namespace UUGS2025.Business.Options
 
         public void Configure(BackOfficeExternalLoginProviderOptions options)
         {
-            // The following options are relevant if you
-            // want to configure auto-linking on the authentication.
             options.AutoLinkOptions = new ExternalSignInAutoLinkOptions(
-
-                // Set to true to enable auto-linking
                 autoLinkExternalAccount: true,
-
-                // [OPTIONAL]
-                // Default: The culture specified in appsettings.json.
-                // Specify the default culture to create the Member as.
-                // It can be dynamically assigned in the OnAutoLinking callback.
                 defaultCulture: null
-
-
-            // [OPTIONAL]
-            // Specify the default "IsApproved" status.
-            // Must be true for auto-linking.
-            //defaultIsApproved: true,
-
-            // [OPTIONAL]
-            // Default: "Member"
-            // Specify the Member Type alias.                
-            //defaultMemberTypeAlias: Constants.Security.DefaultUserTypeAlias
-
             )
             {
-                // [OPTIONAL] Callbacks
-                //OnAutoLinking = (autoLinkUser, loginInfo) =>
-                //{
-                //    // Customize the Member before it's linked.
-                //    // Modify the Members groups based on the Claims returned
-                //    // in the external login info.
-                //    //if (loginInfo.Principal.Claims)
-                //    //{
-
-                //    //}
-                //    bool hasGroup = loginInfo.Principal.Claims.Any(c => c.Type == ClaimTypes.Role && c.Value == "GlobalAdmin");
-                //    //check if group exists
-                //    //if not create the group
-                //        //set group properties
-
-                //    //add groups to user
-                //},
-                // Customize the Member before it is saved whenever they have
-                // logged in with the external provider.
-                // Sync the Members name based on the Claims returned
-                // in the external login info
-
-                // Returns a boolean indicating if sign-in should continue or not.
-
                 OnExternalLogin = (user, loginInfo) =>
                 {
                     var tags = new List<string>();
