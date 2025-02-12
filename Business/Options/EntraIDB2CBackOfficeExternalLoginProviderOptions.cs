@@ -4,6 +4,8 @@ using Umbraco.Cms.Api.Management.Security;
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Security;
 using Umbraco.Cms.Core.Web;
+using uugs2025.Models.PublishedModels;
+using UUGS2025.Models.CustomProperties;
 
 namespace UUGS2025.Business.Options
 {
@@ -29,10 +31,7 @@ namespace UUGS2025.Business.Options
 
         public void Configure(BackOfficeExternalLoginProviderOptions options)
         {
-            options.AutoLinkOptions = new ExternalSignInAutoLinkOptions(
-                autoLinkExternalAccount: true,
-                defaultCulture: null
-            )
+            options.AutoLinkOptions = new ExternalSignInAutoLinkOptions(autoLinkExternalAccount: true, defaultCulture: null)
             {
                 OnExternalLogin = (user, loginInfo) =>
                 {
@@ -49,30 +48,36 @@ namespace UUGS2025.Business.Options
 
                             if (content != null)
                             {
-                                //var settingsPage = content.GetAtRoot().DescendantsOrSelf<GlobalSettings>().FirstOrDefault();
+                                var settingsPage = content.GetAtRoot().DescendantsOrSelf<GlobalSettings>().FirstOrDefault();
 
-                                //if (settingsPage != null)
-                                //{
-                                //    //get claims from the global settingspage
-                                //    var commonClaims = JsonConvert.DeserializeObject<List<KeyValueTagItem>>(settingsPage.Sites.RootElement.ToString());
+                                if (settingsPage != null)
+                                {
+                                    if (settingsPage.Sites != null)
+                                    {
+                                        //get claims from the global settingspage
+                                        var commonClaims = JsonConvert.DeserializeObject<List<KeyValueTagItem>>(settingsPage.Sites.RootElement.ToString());
 
-                                //    foreach (var tagItem in commonClaims)
-                                //    {
-                                //        if (tagItem.Key.Contains(claimValue))
-                                //        {
-                                //            // If the claim exists in the Tags collection, add it to the list of existing claims
-                                //            existingClaims.Add(claimValue);
+                                        if (commonClaims != null)
+                                        {
+                                            foreach (var tagItem in commonClaims)
+                                            {
+                                                if (tagItem.Key.Contains(claimValue))
+                                                {
+                                                    // If the claim exists in the Tags collection, add it to the list of existing claims
+                                                    existingClaims.Add(claimValue);
 
-                                //            foreach (var tag in tagItem.Tags)
-                                //            {
-                                //                if (!tags.Contains(tag)) // Check if the tag already exists in the tags list
-                                //                {
-                                //                    tags.Add(tag); // Add the tag only if it's not already in the list
-                                //                }
-                                //            }
-                                //        }
-                                //    }
-                                //}
+                                                    foreach (var tag in tagItem.Tags)
+                                                    {
+                                                        if (!tags.Contains(tag)) // Check if the tag already exists in the tags list
+                                                        {
+                                                            tags.Add(tag); // Add the tag only if it's not already in the list
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }                                        
+                                    }                                    
+                                }
                             }
                         }
                     }

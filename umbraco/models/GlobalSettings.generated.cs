@@ -52,11 +52,11 @@ namespace uugs2025.Models.PublishedModels
 		// properties
 
 		///<summary>
-		/// Claims
+		/// Sites
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder.Embedded", "14.3.2+abc312c")]
 		[global::System.Diagnostics.CodeAnalysis.MaybeNull]
-		[ImplementPropertyType("claims")]
-		public virtual global::System.Text.Json.JsonDocument Claims => this.Value<global::System.Text.Json.JsonDocument>(_publishedValueFallback, "claims");
+		[ImplementPropertyType("sites")]
+		public virtual global::System.Text.Json.JsonDocument Sites => this.Value<global::System.Text.Json.JsonDocument>(_publishedValueFallback, "sites");
 	}
 }
