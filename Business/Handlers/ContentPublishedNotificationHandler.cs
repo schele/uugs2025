@@ -48,25 +48,22 @@ namespace UUGS2025.Business.Handlers
                 if (status)
                 {
                     var currentUser = _backOfficeUserManager.GetUserAsync(currentUserPrincipal);
-
-                    //todo groups, start node, media node
-                    
-
-
                     var userGuid = currentUser.AsGuid();
                     var pageReference = context.Content.GetById(content.Id);
 
                     if (pageReference is Start startPage)
                     {
-                        //get the name and theme of the startpage
                         var name = startPage.Name;
-                        //var theme = startPage.Theme;
                         var groupName = $"{name}Editors";
 
-                        //create media folder
-                        //todo check if media folder exists
+                        //create media folder                       
+                        var existingFolder = _mediaService.GetPagedChildren(-1, 0, 100, out long totalRecords).FirstOrDefault(m => m.Name.Equals(name, StringComparison.OrdinalIgnoreCase) && m.ContentType.Alias == "Folder");
                         var mediaFolder = _mediaService.CreateMedia(name, -1, "Folder", currentUser.Id);
-                        _mediaService.Save(mediaFolder);                        
+
+                        if (existingFolder == null)
+                        {                            
+                            _mediaService.Save(mediaFolder);
+                        }
 
                         var userGroup = new UserGroup(_shortStringHelper)
                         {
@@ -101,7 +98,6 @@ namespace UUGS2025.Business.Handlers
                         var result = await _userGroupService.CreateAsync(userGroup, currentUser.Result.Key);
 
                         var user = _userService.GetUserById(1);
-                        //user.AddGroup("sdsd");
                     }
                 }
             }

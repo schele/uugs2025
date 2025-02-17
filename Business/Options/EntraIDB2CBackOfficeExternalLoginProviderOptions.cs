@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Text.RegularExpressions;
 using Umbraco.Cms.Api.Management.Security;
 using Umbraco.Cms.Core;
+using Umbraco.Cms.Core.Models.Membership;
 using Umbraco.Cms.Core.Security;
 using Umbraco.Cms.Core.Services;
 using Umbraco.Cms.Core.Web;
@@ -21,10 +22,10 @@ namespace UUGS2025.Business.Options
     {
         public const string SchemeName = "ActiveDirectoryB2C";
         private readonly IUmbracoContextAccessor _umbracoContextAccessor;
-        private readonly IUserService _userService;
-        private readonly IUserGroupService _userGroupService;
+        private readonly Lazy<IUserService> _userService;
+        private readonly Lazy<IUserGroupService> _userGroupService;        
 
-        public EntraIDB2CBackOfficeExternalLoginProviderOptions(IUmbracoContextAccessor umbracoContextAccessor, IUserService userService, IUserGroupService userGroupService)
+        public EntraIDB2CBackOfficeExternalLoginProviderOptions(IUmbracoContextAccessor umbracoContextAccessor, Lazy<IUserService> userService, Lazy<IUserGroupService> userGroupService)
         {
             _umbracoContextAccessor = umbracoContextAccessor;
             _userService = userService;
@@ -135,17 +136,13 @@ namespace UUGS2025.Business.Options
 
             user.StartContentIds = [.. nodeIds];
             user.StartMediaIds = [.. mediaIds];
-            //var selectedGroupAliases = { "AxevallaEditors" };
 
             //add groups
-            //var validGroups = _userGroupService.GetAllAsync(0, 100)
-            //.Result
-            //.Items
-            //.Where(g => tags.Contains(g.Alias))
-            //.Select(g => g.Alias)
-            //.ToArray();
-
-            //user.SetGroups(validGroups);
+            var validGroups = _userGroupService.Value
+                .GetAllAsync(0, 100).Result.Items
+                .Where(g => tags.Any(tag => tag.Equals(g.Alias, StringComparison.OrdinalIgnoreCase)))
+                .Cast<IReadOnlyUserGroup>()
+                .ToList();
         }
 
         public int? GetNodeIdByName(string nodeName)
