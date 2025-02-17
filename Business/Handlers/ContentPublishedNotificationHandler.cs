@@ -18,8 +18,10 @@ namespace UUGS2025.Business.Handlers
         private readonly IBackOfficeUserManager _backOfficeUserManager;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IMediaService _mediaService;
+        private readonly IUserService _userService;
 
-        public ContentPublishedNotificationHandler(IMediaService mediaService, IHttpContextAccessor httpContextAccessor, IBackOfficeUserManager backOfficeUserManager, IShortStringHelper shortStringHelper, IUserGroupService userGroupService, IUmbracoContextAccessor umbracoContextAccessor)
+
+        public ContentPublishedNotificationHandler(IUserService userService, IMediaService mediaService, IHttpContextAccessor httpContextAccessor, IBackOfficeUserManager backOfficeUserManager, IShortStringHelper shortStringHelper, IUserGroupService userGroupService, IUmbracoContextAccessor umbracoContextAccessor)
         {
             _userGroupService = userGroupService;
             _umbracoContextAccessor = umbracoContextAccessor;
@@ -27,6 +29,7 @@ namespace UUGS2025.Business.Handlers
             _backOfficeUserManager = backOfficeUserManager;
             _httpContextAccessor = httpContextAccessor;
             _mediaService = mediaService;
+            _userService = userService;
         }
 
         public async void Handle(ContentPublishedNotification notification)
@@ -45,6 +48,11 @@ namespace UUGS2025.Business.Handlers
                 if (status)
                 {
                     var currentUser = _backOfficeUserManager.GetUserAsync(currentUserPrincipal);
+
+                    //todo groups, start node, media node
+                    
+
+
                     var userGuid = currentUser.AsGuid();
                     var pageReference = context.Content.GetById(content.Id);
 
@@ -55,7 +63,8 @@ namespace UUGS2025.Business.Handlers
                         //var theme = startPage.Theme;
                         var groupName = $"{name}Editors";
 
-                        //todo create a media folder
+                        //create media folder
+                        //todo check if media folder exists
                         var mediaFolder = _mediaService.CreateMedia(name, -1, "Folder", currentUser.Id);
                         _mediaService.Save(mediaFolder);                        
 
@@ -90,6 +99,9 @@ namespace UUGS2025.Business.Handlers
 
                         userGroup.AddAllowedSection("content");
                         var result = await _userGroupService.CreateAsync(userGroup, currentUser.Result.Key);
+
+                        var user = _userService.GetUserById(1);
+                        //user.AddGroup("sdsd");
                     }
                 }
             }

@@ -1,10 +1,18 @@
 ﻿using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using Polly;
+using System.Globalization;
+using System.Security.Claims;
+using System.Text.RegularExpressions;
 using Umbraco.Cms.Api.Management.Security;
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Security;
+using Umbraco.Cms.Core.Services;
 using Umbraco.Cms.Core.Web;
+using Umbraco.Cms.Web.Common;
+using Umbraco.Extensions;
 using uugs2025.Models.PublishedModels;
+using UUGS2025.Business.Extensions;
 using UUGS2025.Models.CustomProperties;
 
 namespace UUGS2025.Business.Options
@@ -13,10 +21,14 @@ namespace UUGS2025.Business.Options
     {
         public const string SchemeName = "ActiveDirectoryB2C";
         private readonly IUmbracoContextAccessor _umbracoContextAccessor;
+        private readonly IUserService _userService;
+        private readonly IUserGroupService _userGroupService;
 
-        public EntraIDB2CBackOfficeExternalLoginProviderOptions(IUmbracoContextAccessor umbracoContextAccessor)
+        public EntraIDB2CBackOfficeExternalLoginProviderOptions(IUmbracoContextAccessor umbracoContextAccessor, IUserService userService, IUserGroupService userGroupService)
         {
             _umbracoContextAccessor = umbracoContextAccessor;
+            _userService = userService;
+            _userGroupService = userGroupService;
         }
 
         public void Configure(string? name, BackOfficeExternalLoginProviderOptions options)
@@ -91,10 +103,81 @@ namespace UUGS2025.Business.Options
 
         private void SyncUserGroups(BackOfficeIdentityUser user, List<string> tags)
         {
+            //add roles
             foreach (var claim in tags)
             {
                 user.AddRole(claim);
             }
+
+            //approve user
+            user.IsApproved = true;
+
+            //add start pages and media folders
+            var nodeIds = new List<int>();
+            var mediaIds = new List<int>();
+            var startPages = tags.GetUniquePrefixes();
+
+            foreach (var item in startPages)
+            {
+                var nodeId = GetNodeIdByName(item);
+                var mediaId = GetMediaFolderIdByName(item);
+
+                if (nodeId.HasValue)
+                {
+                    nodeIds.Add(nodeId.Value);
+                }
+
+                if (mediaId.HasValue)
+                {
+                    mediaIds.Add(mediaId.Value);
+                }
+            }
+
+            user.StartContentIds = [.. nodeIds];
+            user.StartMediaIds = [.. mediaIds];
+            //var selectedGroupAliases = { "AxevallaEditors" };
+
+            //add groups
+            //var validGroups = _userGroupService.GetAllAsync(0, 100)
+            //.Result
+            //.Items
+            //.Where(g => tags.Contains(g.Alias))
+            //.Select(g => g.Alias)
+            //.ToArray();
+
+            //user.SetGroups(validGroups);
+        }
+
+        public int? GetNodeIdByName(string nodeName)
+        {
+            if (_umbracoContextAccessor.TryGetUmbracoContext(out var umbracoContext))
+            {
+                var content = umbracoContext.Content;
+
+                var node = content?.GetAtRoot()
+                    .SelectMany(x => x.DescendantsOrSelf())
+                    .FirstOrDefault(x => x.Name.Equals(nodeName, StringComparison.OrdinalIgnoreCase));
+
+                return node?.Id;
+            }
+
+            return null;
+        }
+
+        public int? GetMediaFolderIdByName(string folderName)
+        {
+            if (_umbracoContextAccessor.TryGetUmbracoContext(out var umbracoContext))
+            {
+                var media = umbracoContext.Media;
+
+                var folder = media.GetAtRoot()
+                    .SelectMany(x => x.DescendantsOrSelf())
+                    .FirstOrDefault(x => x.Name.Equals(folderName, StringComparison.OrdinalIgnoreCase));
+
+                return folder?.Id;
+            }
+
+            return null;
         }
     }
 }

@@ -1,4 +1,9 @@
-﻿using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.Owin.Security.Cookies;
+using System.Security.Claims;
 using Umbraco.Cms.Api.Management.Security;
 using UUGS2025.Business.Options;
 
@@ -26,24 +31,21 @@ namespace UUGS2025.Business.Extensions
                                 options.CallbackPath = configuration["AzureAd:RedirectUri"] ?? "/signin-oidc";
                                 options.ClientSecret = configuration["AzureAd:ClientSecret"];
 
-                                //options.ResponseType = OpenIdConnectResponseType.CodeIdToken;
-                                //options.UseTokenLifetime = false;
-                                //options.SignInScheme = CookieAuthenticationDefaults.AuthenticationType;
-                                //options.SignOutScheme = CookieAuthenticationDefaults.AuthenticationType;
-                                //options.SaveTokens = true;
+                                options.ResponseType = OpenIdConnectResponseType.CodeIdToken;
+                                options.UseTokenLifetime = false;
+                                options.SignInScheme = CookieAuthenticationDefaults.AuthenticationType;
+                                options.SignOutScheme = CookieAuthenticationDefaults.AuthenticationType;
+                                options.SaveTokens = true;
 
-                                //options.Scope.Clear();
-                                //options.Scope.Add(OpenIdConnectScope.OpenId);
-                                //options.Scope.Add(OpenIdConnectScope.Email);
-
-                                //options.TokenValidationParameters = new TokenValidationParameters
-                                //{
-                                //    ValidateIssuer = true,
-                                //    ValidIssuer = options.Authority,
-                                //    ValidateAudience = true,
-                                //    ValidAudience = options.ClientId,
-                                //    ValidateLifetime = true
-                                //};
+                                options.TokenValidationParameters = new TokenValidationParameters
+                                {
+                                    ValidateIssuer = true,
+                                    ValidIssuer = options.Authority,
+                                    ValidateAudience = true,
+                                    ValidAudience = options.ClientId,
+                                    ValidateLifetime = true,
+                                    NameClaimType = "name"
+                                };
 
                                 options.Events = new OpenIdConnectEvents
                                 {
