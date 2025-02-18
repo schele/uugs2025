@@ -143,6 +143,8 @@ namespace UUGS2025.Business.Options
                 .Where(g => tags.Any(tag => tag.Equals(g.Alias, StringComparison.OrdinalIgnoreCase)))
                 .Cast<IReadOnlyUserGroup>()
                 .ToList();
+
+            user.SetGroups(validGroups);
         }
 
         public int? GetNodeIdByName(string nodeName)

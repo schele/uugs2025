@@ -20,9 +20,15 @@ using UUGS2025.Models;
 
 namespace uugs2025.Models.PublishedModels
 {
+	// Mixin Content Type with alias "base"
+	/// <summary>Base</summary>
+	public partial interface IBase : IPublishedContent
+	{
+	}
+
 	/// <summary>Base</summary>
 	[PublishedModel("base")]
-	public partial class Base : BaseContentModel
+	public partial class Base : BaseContentModel, IBase
 	{
 		// helpers
 #pragma warning disable 0109 // new is redundant

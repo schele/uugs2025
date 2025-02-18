@@ -61,7 +61,7 @@ namespace UUGS2025.Business.Handlers
                         var mediaFolder = _mediaService.CreateMedia(name, -1, "Folder", currentUser.Id);
 
                         if (existingFolder == null)
-                        {                            
+                        {
                             _mediaService.Save(mediaFolder);
                         }
 

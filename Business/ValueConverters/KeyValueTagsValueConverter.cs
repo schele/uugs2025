@@ -7,6 +7,13 @@ namespace UUGS2025.Business.ValueConverters
 {
     public class KeyValueTagsValueConverter : PropertyValueConverterBase
     {
+        private readonly ILogger<KeyValueTagsValueConverter> _logger;
+
+        public KeyValueTagsValueConverter(ILogger<KeyValueTagsValueConverter> logger)
+        {
+            _logger = logger;
+        }
+
         public override bool IsConverter(IPublishedPropertyType propertyType) => propertyType.EditorAlias.Equals("keyValueTags");
 
         public override Type GetPropertyValueType(IPublishedPropertyType propertyType) => typeof(IEnumerable<KeyValueTagItem>);
@@ -25,8 +32,10 @@ namespace UUGS2025.Business.ValueConverters
             {
                 return JsonConvert.DeserializeObject<IEnumerable<KeyValueTagItem>>(sourceString);
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
+                _logger.LogError(e.Message);
+
                 return Enumerable.Empty<KeyValueTagItem>();
             }
         }
