@@ -1,5 +1,5 @@
 ﻿using Umbraco.Cms.Core.Composing;
-using UUGS2025.Business.ValueConverters;
+using UUGS2025.Business.Converters;
 
 namespace UUGS2025.Business.Composers
 {
