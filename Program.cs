@@ -13,6 +13,7 @@ builder.Configuration.GetConnectionString("umbracoDbDSN");
 builder.CreateUmbracoBuilder()
     .AddBackOffice()
     .AddWebsite()
+    //.AddDeliveryApi()
     .AddComposers()
     .ConfigureAuthenticationUsers()
     .Build();

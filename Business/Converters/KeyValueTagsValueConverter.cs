@@ -3,7 +3,7 @@ using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.PropertyEditors;
 using UUGS2025.Models.CustomProperties;
 
-namespace UUGS2025.Business.ValueConverters
+namespace UUGS2025.Business.Converters
 {
     public class KeyValueTagsValueConverter : PropertyValueConverterBase
     {
