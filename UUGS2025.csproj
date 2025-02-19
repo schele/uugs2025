@@ -5,16 +5,14 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="wwwroot\App_Plugins\TwoFactorProviders\**" />
-    <Content Remove="wwwroot\App_Plugins\TwoFactorProviders\**" />
-    <EmbeddedResource Remove="wwwroot\App_Plugins\TwoFactorProviders\**" />
-    <None Remove="wwwroot\App_Plugins\TwoFactorProviders\**" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Remove="Business\Extensions\AuthenticationExtensions.cs" />
     <Compile Remove="Business\Extensions\MemberAuthenticationExtensions.cs" />
     <Compile Remove="Business\Options\EntraIDB2CMembersExternalLoginProviderOptions.cs" />
     <Compile Remove="Business\Options\EntraIDB2CUsersExternalLoginProviderOptions.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="wwwroot\App_Plugins\TwoFactorProviders\twoFactorProviderGoogleAuthenticator.controller.js" />
+    <Content Remove="wwwroot\App_Plugins\TwoFactorProviders\twoFactorProviderGoogleAuthenticator.html" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Plugins\Client\index.html" />

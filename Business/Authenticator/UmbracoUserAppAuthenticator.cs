@@ -35,7 +35,7 @@ namespace UUGS2025.Business.Authenticator
 
             ArgumentNullException.ThrowIfNull(user);
 
-            var applicationName = "My application name";
+            var applicationName = "UUGS2025";
             var twoFactorAuthenticator = new TwoFactorAuthenticator();
             SetupCode setupInfo = twoFactorAuthenticator.GenerateSetupCode(applicationName, user.Username, secret, false);
             return Task.FromResult<ISetupTwoFactorModel>(new TwoFactorAuthInfo()
