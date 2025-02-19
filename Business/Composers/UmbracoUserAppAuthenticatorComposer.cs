@@ -12,11 +12,6 @@ namespace UUGS2025.Business.Composers
             var identityBuilder = new BackOfficeIdentityBuilder(builder.Services);
 
             identityBuilder.AddTwoFactorProvider<UmbracoUserAppAuthenticator>(UmbracoUserAppAuthenticator.Name);
-
-            builder.Services.Configure<TwoFactorLoginViewOptions>(UmbracoUserAppAuthenticator.Name, options =>
-            {
-                options.SetupViewPath = "..\\App_Plugins\\TwoFactorProviders\\twoFactorProviderGoogleAuthenticator.html";
-            });
         }
     }
 }
