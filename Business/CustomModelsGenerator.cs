@@ -3,18 +3,19 @@ using System.Text;
 using Umbraco.Cms.Core.Configuration.Models;
 using Umbraco.Cms.Infrastructure.ModelsBuilder.Building;
 using Umbraco.Cms.Infrastructure.ModelsBuilder;
+using IHostingEnvironment = Umbraco.Cms.Core.Hosting.IHostingEnvironment;
 
 namespace UUGS2025.Business
 {
     public class CustomModelsGenerator : IModelsGenerator
     {
-        private readonly Umbraco.Cms.Core.Hosting.IHostingEnvironment _hostingEnvironment;
+        private readonly IHostingEnvironment _hostingEnvironment;
         private readonly OutOfDateModelsStatus _outOfDateModels;
         private readonly UmbracoServices _umbracoService;
         private ModelsBuilderSettings _config;
 
         public CustomModelsGenerator(UmbracoServices umbracoService, IOptionsMonitor<ModelsBuilderSettings> config,
-            OutOfDateModelsStatus outOfDateModels, Umbraco.Cms.Core.Hosting.IHostingEnvironment hostingEnvironment)
+            OutOfDateModelsStatus outOfDateModels, IHostingEnvironment hostingEnvironment)
         {
             _umbracoService = umbracoService;
             _config = config.CurrentValue;
