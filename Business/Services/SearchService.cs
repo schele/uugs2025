@@ -10,8 +10,8 @@ namespace UUGS2025.Business.Services
         {
             var searchResults = new List<Hit>
             {
-                new Hit { Name = $"{query} 1", Description = "Description 1", Url = "/example1", CreateDate = DateTime.Now },
-                new Hit { Name = $"{query} 2", Description = "Description 2", Url = "/example2", CreateDate = DateTime.Now }
+                new() { Name = $"{query} 1", Description = "Description 1", Url = "/example1", CreateDate = DateTime.Now },
+                new() { Name = $"{query} 2", Description = "Description 2", Url = "/example2", CreateDate = DateTime.Now }
             };
 
             return searchResults;
