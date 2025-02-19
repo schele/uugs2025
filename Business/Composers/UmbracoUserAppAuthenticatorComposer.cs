@@ -1,5 +1,4 @@
-﻿using Umbraco.Cms.Api.Management.Security;
-using Umbraco.Cms.Core.Composing;
+﻿using Umbraco.Cms.Core.Composing;
 using Umbraco.Cms.Core.Security;
 using UUGS2025.Business.Authenticator;
 

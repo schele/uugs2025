@@ -29,7 +29,6 @@ app.MapBlazorHub();
 
 await app.BootUmbracoAsync();
 
-
 app.UseUmbraco()
     .WithMiddleware(u =>
     {
